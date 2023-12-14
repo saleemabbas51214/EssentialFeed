@@ -17,7 +17,7 @@
 ///  So rather using Subclasing we can use composition , we can start injecting into the feedloader.
 ///  Now you can use protocol to define the interfacces because HTTPClient is an abstract class now
 ///  give a url from outside instead hardcoding inside the RemoteFeedLoader, we moved all the details to the test side and code is getting more generic
-///
+/// to remove the duplication of code use the factory method to make System Under Test SUT
 ///
 
 import XCTest
@@ -39,33 +39,36 @@ protocol HTTPClient {
     func get(from url: URL)
 }
 
-class HTTPClientSpy: HTTPClient {
-    
-    func get(from url: URL) {
-        requestedURL = url
-    }
-    
-    var requestedURL: URL?
-}
-
 
 final class RemoteFeedLoaderTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
-        let client = HTTPClientSpy()
-        let url = URL(string: "https://a-url-com")!
-        _ =  RemoteFeedLoader(url: url, client: client)
-        
+        let (_, client) =  makeSUT()
         XCTAssertNil(client.requestedURL)
     }
     
     func test_load_requestDataFromURL() {
-        let client = HTTPClientSpy()
         let url = URL(string: "https://a-given-url-com")!
-        let sut = RemoteFeedLoader(url: url, client: client)
-        
+        let (sut, client) = makeSUT(url: url)
+    
         sut.load()
         
         XCTAssertEqual(client.requestedURL, url)
+    }
+    
+    // MARK: Helpers
+    
+    private func makeSUT(url: URL = URL(string: "https://a-given-url-com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteFeedLoader(url: url, client: client)
+        return (sut, client)
+    }
+    
+    private class HTTPClientSpy: HTTPClient {
+        var requestedURL: URL?
+        
+        func get(from url: URL) {
+            requestedURL = url
+        }
     }
 }

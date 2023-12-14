@@ -13,6 +13,3 @@ struct FeedItem {
     let location: String?
     let imageUrl: String?
 }
-
-
-// feedd item

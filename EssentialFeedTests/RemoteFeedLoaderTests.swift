@@ -19,26 +19,16 @@
 ///  give a url from outside instead hardcoding inside the RemoteFeedLoader, we moved all the details to the test side and code is getting more generic
 /// to remove the duplication of code use the factory method to make System Under Test SUT
 ///
+///  outcomes :
+/// 1.  singelton progression to eliminating the tight coupling by using dependency injection.
+/// 2. there is no reason to make the httpclient a singelton or a shared instance apart from conveience to locate the instance directly.
+///  3. for creation of singeltons you need to have a good reason for example you want to have only one HTTPClient per application.
+///  4. by introducing the clean separation with protocols, we made the remotefeedloader more flexible, open for extension and more testable
+///   5. refactoring by backing up by tests is a very power ful tool, without tests you will have a feat of change
+///
 
 import XCTest
-
-class RemoteFeedLoader {
-    let client: HTTPClient
-    let url: URL
-    
-    init(url: URL, client: HTTPClient) {
-        self.client = client
-        self.url = url
-    }
-    func load() {
-        client.get(from: url)
-    }
-}
-
-protocol HTTPClient {
-    func get(from url: URL)
-}
-
+@testable import EssentialFeed
 
 final class RemoteFeedLoaderTests: XCTestCase {
 

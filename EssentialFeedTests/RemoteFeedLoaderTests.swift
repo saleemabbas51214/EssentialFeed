@@ -15,6 +15,7 @@
 ///  1. HTTPClient.shared.get is mixing the responsibilities here , looking for a method (get) in an object  and responsibility of locating this object using shared.
 ///  If we inject our client it would be more testable
 ///  So rather using Subclasing we can use composition , we can start injecting into the feedloader.
+///  Now you can use protocol to define the interfacces because HTTPClient is an abstract class now
 
 import XCTest
 
@@ -29,18 +30,19 @@ class RemoteFeedLoader {
     }
 }
 
-class HTTPClient {
-    func get(from url: URL) { }
+protocol HTTPClient {
+    func get(from url: URL)
 }
 
 class HTTPClientSpy: HTTPClient {
     
-    override func get(from url: URL) {
+    func get(from url: URL) {
         requestedURL = url
     }
     
     var requestedURL: URL?
 }
+
 
 final class RemoteFeedLoaderTests: XCTestCase {
 

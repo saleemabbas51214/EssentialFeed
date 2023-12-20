@@ -7,6 +7,7 @@
 
 
 /// we did not conform to the feedloader protocol , so the answer is we can take smaller and safer steps by test driving the implementation we dont need it yet when the time comes then we will do the conformance
+/// we prevent subclassing remotefeedloader so set it final
 
 import Foundation
 
@@ -19,19 +20,19 @@ protocol FeedLoader {
     func load(completion: @escaping (LoadFeedResult) -> Void)
 }
 
-protocol HTTPClient {
+public protocol HTTPClient {
     func get(from url: URL)
 }
 
-class RemoteFeedLoader {
-    let client: HTTPClient
-    let url: URL
+public final class RemoteFeedLoader {
+    private let url: URL
+    private let client: HTTPClient
     
-    init(url: URL, client: HTTPClient) {
+    public init(url: URL, client: HTTPClient) {
         self.client = client
         self.url = url
     }
-    func load() {
+    public func load() {
         client.get(from: url)
     }
 }

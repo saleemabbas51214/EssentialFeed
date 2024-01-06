@@ -29,13 +29,12 @@
 /// when testing objects collaborating, asserting the values passed is not enough we also need to ask how many times as the method invoked?
 /// mistakes like this happen all the time especially when merging the code
 
-import XCTest
 @testable import EssentialFeed
+import XCTest
 
 final class RemoteFeedLoaderTests: XCTestCase {
-
     func test_init_doesNotRequestDataFromURL() {
-        let (_, client) =  makeSUT()
+        let (_, client) = makeSUT()
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
@@ -87,6 +86,5 @@ final class RemoteFeedLoaderTests: XCTestCase {
             }
             requestedURLs.append(url)
         }
-
     }
 }

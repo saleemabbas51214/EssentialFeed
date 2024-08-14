@@ -15,6 +15,7 @@
 		055EAAE72BB5011A0052C892 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055EAAE62BB5011A0052C892 /* URLSessionHTTPClientTests.swift */; };
 		0560670E2BB923E800F88394 /* XCTestCase+MemoryLeaksTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0560670D2BB923E800F88394 /* XCTestCase+MemoryLeaksTracking.swift */; };
 		057CBE662BBE3B1C00EA4AF1 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057CBE652BBE3B1C00EA4AF1 /* URLSessionHTTPClient.swift */; };
+		059B7C412C6C2C7F00AC6B97 /* CachedFeedUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059B7C402C6C2C7F00AC6B97 /* CachedFeedUseCaseTests.swift */; };
 		05A434BA2BAC00A30059E017 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A434B92BAC00A30059E017 /* HTTPClient.swift */; };
 		05A434BC2BAC011A0059E017 /* FeedItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A434BB2BAC011A0059E017 /* FeedItemsMapper.swift */; };
 		05BA6E192B3A60A100D2890E /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA6E182B3A60A100D2890E /* RemoteFeedLoader.swift */; };
@@ -40,6 +41,7 @@
 		055EAAE62BB5011A0052C892 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		0560670D2BB923E800F88394 /* XCTestCase+MemoryLeaksTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeaksTracking.swift"; sourceTree = "<group>"; };
 		057CBE652BBE3B1C00EA4AF1 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		059B7C402C6C2C7F00AC6B97 /* CachedFeedUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedFeedUseCaseTests.swift; sourceTree = "<group>"; };
 		05A434B92BAC00A30059E017 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		05A434BB2BAC011A0059E017 /* FeedItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemsMapper.swift; sourceTree = "<group>"; };
 		05BA6E182B3A60A100D2890E /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 		054E2E492B24D40D00EE33A5 /* EssentialFeed */ = {
 			isa = PBXGroup;
 			children = (
+				059B7C3E2C6C2C3600AC6B97 /* Feed Cache */,
 				05BA6E172B3A601E00D2890E /* Feed API */,
 				054E2E4A2B24D40D00EE33A5 /* EssentialFeed.h */,
 				054E2E552B24D8EE00EE33A5 /* FeedFeature */,
@@ -104,6 +107,7 @@
 		054E2E5B2B24D9A300EE33A5 /* EssentialFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				059B7C3F2C6C2C6000AC6B97 /* Feed Cached */,
 				0560670C2BB9239A00F88394 /* Helpers */,
 				05A434BD2BAC0BAF0059E017 /* Feed API */,
 			);
@@ -116,6 +120,21 @@
 				0560670D2BB923E800F88394 /* XCTestCase+MemoryLeaksTracking.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		059B7C3E2C6C2C3600AC6B97 /* Feed Cache */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Feed Cache";
+			sourceTree = "<group>";
+		};
+		059B7C3F2C6C2C6000AC6B97 /* Feed Cached */ = {
+			isa = PBXGroup;
+			children = (
+				059B7C402C6C2C7F00AC6B97 /* CachedFeedUseCaseTests.swift */,
+			);
+			path = "Feed Cached";
 			sourceTree = "<group>";
 		};
 		05A434BD2BAC0BAF0059E017 /* Feed API */ = {
@@ -264,6 +283,7 @@
 				054E2E672B24DB3500EE33A5 /* RemoteFeedLoaderTests.swift in Sources */,
 				0560670E2BB923E800F88394 /* XCTestCase+MemoryLeaksTracking.swift in Sources */,
 				055EAAE72BB5011A0052C892 /* URLSessionHTTPClientTests.swift in Sources */,
+				059B7C412C6C2C7F00AC6B97 /* CachedFeedUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -439,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

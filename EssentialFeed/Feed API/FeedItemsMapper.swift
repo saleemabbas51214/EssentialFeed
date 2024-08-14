@@ -8,7 +8,7 @@
 import Foundation
 
 // internal would be used inside only own module that is why used internal here
-internal final class FeedItemsMapper {
+final class FeedItemsMapper {
     private struct Root: Decodable {
         let items: [Item]
     }

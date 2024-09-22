@@ -107,8 +107,8 @@
 		054E2E5B2B24D9A300EE33A5 /* EssentialFeedTests */ = {
 			isa = PBXGroup;
 			children = (
-				059B7C3F2C6C2C6000AC6B97 /* Feed Cached */,
 				0560670C2BB9239A00F88394 /* Helpers */,
+				059B7C3F2C6C2C6000AC6B97 /* Feed Cached */,
 				05A434BD2BAC0BAF0059E017 /* Feed API */,
 			);
 			path = EssentialFeedTests;

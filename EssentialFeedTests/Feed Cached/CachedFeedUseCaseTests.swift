@@ -10,15 +10,18 @@ import EssentialFeed
 
 class LocalFeedLoader {
     private let store: FeedStore
-    init(store: FeedStore) {
+    private let currentDate: () -> Date
+
+    init(store: FeedStore, currentDate: @escaping () -> Date) {
         self.store = store
+        self.currentDate = currentDate
     }
     
     func save(items: [FeedItem]) {
         store.deleteCachedItems { [weak self] error in
             guard let self = self else { return }
             if error == nil {
-                store.insert(items: items)
+                store.insert(items, timestamp: currentDate())
             }
         }
     }
@@ -30,6 +33,8 @@ class FeedStore {
     var insertCallCount = 0
     
     private var deletionCompletion = [DeletionCompletion]()
+    var insertions = [(items: [FeedItem], timestamp: Date)]()
+
     func deleteCachedItems(completion: @escaping DeletionCompletion) {
         deleteCachedFeedCallCount += 1
         deletionCompletion.append(completion)
@@ -40,12 +45,12 @@ class FeedStore {
     }
     
     func completeDeletionSuccessfully(at index: Int = 0) {
-        insertCallCount += 1
         deletionCompletion[index](nil)
     }
     
-    func insert(items: [FeedItem]) {
+    func insert(_ items: [FeedItem], timestamp: Date) {
         insertCallCount += 1
+        insertions.append((items, timestamp))
     }
 }
 
@@ -87,11 +92,23 @@ class CachedFeedUseCaseTests: XCTestCase {
         XCTAssertEqual(store.insertCallCount, 1)
     }
     
+    func test_save_requestsNewCacheInsertionWithTimestampOnSuccessfulDeletion() {
+            let timestamp = Date()
+            let items = [uniqueItem(), uniqueItem()]
+            let (sut, store) = makeSUT(currentDate: { timestamp })
+
+            sut.save(items: items)
+            store.completeDeletionSuccessfully()
+
+            XCTAssertEqual(store.insertions.count, 1)
+            XCTAssertEqual(store.insertions.first?.items, items)
+            XCTAssertEqual(store.insertions.first?.timestamp, timestamp)
+        }
     
     // MARK: Helpers
-    private func makeSUT() -> (sut: LocalFeedLoader, store: FeedStore) {
+    private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: LocalFeedLoader, store: FeedStore) {
         let store = FeedStore()
-        let sut = LocalFeedLoader(store: store)
+        let sut = LocalFeedLoader(store: store, currentDate: currentDate)
         return (sut, store)
     }
     

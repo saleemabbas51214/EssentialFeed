@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0511A9CE2CAE64B8000D824A /* RemoteFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0511A9CD2CAE64B8000D824A /* RemoteFeedItem.swift */; };
+		0511A9D02CAE6530000D824A /* LocalFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0511A9CF2CAE6530000D824A /* LocalFeedItem.swift */; };
 		054E2E4B2B24D40D00EE33A5 /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 054E2E4A2B24D40D00EE33A5 /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		054E2E522B24D42D00EE33A5 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E2E512B24D42D00EE33A5 /* FeedItem.swift */; };
 		054E2E542B24D7F100EE33A5 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E2E532B24D7F100EE33A5 /* FeedLoader.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		0511A9CD2CAE64B8000D824A /* RemoteFeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedItem.swift; sourceTree = "<group>"; };
+		0511A9CF2CAE6530000D824A /* LocalFeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedItem.swift; sourceTree = "<group>"; };
 		054E2E472B24D40D00EE33A5 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		054E2E4A2B24D40D00EE33A5 /* EssentialFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EssentialFeed.h; sourceTree = "<group>"; };
 		054E2E512B24D42D00EE33A5 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			children = (
 				0555DFCC2CAE456C00575888 /* LocalFeedLoader.swift */,
 				0555DFCE2CAE471500575888 /* FeedStore.swift */,
+				0511A9CF2CAE6530000D824A /* LocalFeedItem.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				05A434BC2BAC011A0059E017 /* FeedItemsMapper.swift in Sources */,
 				0511A9CE2CAE64B8000D824A /* RemoteFeedItem.swift in Sources */,
 				054E2E542B24D7F100EE33A5 /* FeedLoader.swift in Sources */,
+				0511A9D02CAE6530000D824A /* LocalFeedItem.swift in Sources */,
 				0555DFCF2CAE471500575888 /* FeedStore.swift in Sources */,
 				05BA6E192B3A60A100D2890E /* RemoteFeedLoader.swift in Sources */,
 				05A434BA2BAC00A30059E017 /* HTTPClient.swift in Sources */,

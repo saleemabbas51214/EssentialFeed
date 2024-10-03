@@ -104,6 +104,20 @@ class CachedFeedUseCaseTests: XCTestCase {
         }
     }
     
+    // check if it returns nil when the instance de allocated
+    func test_save_doesNotDeliverDeletionErrorAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
+
+        var receivedResults = [Error?]()
+        sut?.save([uniqueItem()]) { receivedResults.append($0) }
+
+        sut = nil
+        store.completeDeletion(with: anyNSError())
+
+        XCTAssertTrue(receivedResults.isEmpty)
+    }
+    
     // MARK: Helpers
     
     private class FeedStoreSpy: FeedStore {

@@ -7,13 +7,6 @@
 
 import Foundation
 
-internal struct RemoteFeedItem: Decodable {
-    internal let id: UUID
-    internal let description: String?
-    internal let location: String?
-    internal let image: URL
-}
-
 // internal would be used inside only own module that is why used internal here
 final class FeedItemsMapper {
     private struct Root: Decodable {

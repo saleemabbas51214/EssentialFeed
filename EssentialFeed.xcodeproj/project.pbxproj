@@ -93,8 +93,8 @@
 			children = (
 				059B7C3E2C6C2C3600AC6B97 /* Feed Cache */,
 				05BA6E172B3A601E00D2890E /* Feed API */,
-				054E2E4A2B24D40D00EE33A5 /* EssentialFeed.h */,
 				054E2E552B24D8EE00EE33A5 /* FeedFeature */,
+				054E2E4A2B24D40D00EE33A5 /* EssentialFeed.h */,
 			);
 			path = EssentialFeed;
 			sourceTree = "<group>";

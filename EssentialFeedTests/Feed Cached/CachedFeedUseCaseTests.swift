@@ -8,43 +8,6 @@
 import XCTest
 import EssentialFeed
 
-class LocalFeedLoader {
-    private let store: FeedStore
-    private let currentDate: () -> Date
-
-    init(store: FeedStore, currentDate: @escaping () -> Date) {
-        self.store = store
-        self.currentDate = currentDate
-    }
-    
-    func save(_ items: [FeedItem], completion: @escaping (Error?) -> Void) {
-        store.deleteCachedItems { [weak self] error in
-            guard let self = self else { return }
-            if let cacheDeletionError = error {
-                completion(cacheDeletionError)
-            } else {
-                self.cache(items, with: completion)
-            }
-        }
-    }
-    
-    private func cache(_ items: [FeedItem], with completion: @escaping (Error?) -> Void) {
-        store.insert(items, timestamp: currentDate()) { [weak self] error in
-            guard self != nil else { return }
-
-            completion(error)
-        }
-    }
-}
-
-protocol FeedStore {
-    typealias DeletionCompletion = (Error?) -> Void
-    typealias InsertionCompletion = (Error?) -> Void
-
-    func deleteCachedItems(completion: @escaping DeletionCompletion)
-    func insert(_ items: [FeedItem], timestamp: Date, completion: @escaping InsertionCompletion)
-}
-
 class CachedFeedUseCaseTests: XCTestCase {
     
     func test_doNot_Delete_CachedItem_On_Creation() {
@@ -55,10 +18,10 @@ class CachedFeedUseCaseTests: XCTestCase {
     
     func test_save_requestsCacheDeletion() {
         let (sut, store) = makeSUT()
-
+        
         let items = [uniqueItem(), uniqueItem()]
         sut.save(items) { _ in }
-
+        
         XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
     }
     
@@ -74,20 +37,20 @@ class CachedFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_requestsNewCacheInsertionWithTimestampOnSuccessfulDeletion() {
-            let timestamp = Date()
-            let items = [uniqueItem(), uniqueItem()]
-            let (sut, store) = makeSUT(currentDate: { timestamp })
-
-            sut.save(items) { _ in }
-            store.completeDeletionSuccessfully()
-
+        let timestamp = Date()
+        let items = [uniqueItem(), uniqueItem()]
+        let (sut, store) = makeSUT(currentDate: { timestamp })
+        
+        sut.save(items) { _ in }
+        store.completeDeletionSuccessfully()
+        
         XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed, .insert(items, timestamp)])
     }
     
     func test_save_failsOnDeletionError() {
         let (sut, store) = makeSUT()
         let deletionError = anyNSError()
- 
+        
         expect(sut, toCompleteWithError: deletionError) {
             store.completeDeletion(with: deletionError)
         }
@@ -96,7 +59,7 @@ class CachedFeedUseCaseTests: XCTestCase {
     func test_save_failsOnInsertionError() {
         let (sut, store) = makeSUT()
         let insertionError = anyNSError()
-
+        
         expect(sut, toCompleteWithError: insertionError) {
             store.completeDeletionSuccessfully()
             store.completeInsertion(with: insertionError)
@@ -116,27 +79,27 @@ class CachedFeedUseCaseTests: XCTestCase {
     func test_save_doesNotDeliverDeletionErrorAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
-
+        
         var receivedResults = [Error?]()
         sut?.save([uniqueItem()]) { receivedResults.append($0) }
-
+        
         sut = nil
         store.completeDeletion(with: anyNSError())
-
+        
         XCTAssertTrue(receivedResults.isEmpty)
     }
     
     func test_save_doesNotDeliverInsertionErrorAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
-
+        
         var receivedResults = [Error?]()
         sut?.save([uniqueItem()]) { receivedResults.append($0) }
-
+        
         store.completeDeletionSuccessfully()
         sut = nil
         store.completeInsertion(with: anyNSError())
-
+        
         XCTAssertTrue(receivedResults.isEmpty)
     }
     
